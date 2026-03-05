@@ -7,17 +7,16 @@ import {
 } from "@/store/useGlobalStore";
 
 interface TabBarprops {
-  name: string;
+
 }
 import { Zap, Award } from "lucide-react";
-export default function TabBar({ name }: TabBarprops) {
+export default function TabBar({  }: TabBarprops) {
   const tabName = useDashboardInfo((state) => state.dashboardInfo);
   const setAddNewTab = useIsOpen((state) => state.setAddNewTab);
 
   const { activeTab, setActiveTab } = useActiveTab();
   const [tabNumber, setTabNumber] = useState([0, 1]);
   const [maxTabs, setMaxTabs] = useState(0);
-  console.log(name);
   useEffect(() => {
     function update() {
       setMaxTabs(

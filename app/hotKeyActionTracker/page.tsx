@@ -18,15 +18,11 @@ export default function HotKeyActionTracker() {
   const activeTab = useActiveTab((state) => state.activeTab);
   const isAddNewTab = useIsOpen((state) => state.isAddNewTab);
 
-  console.log(dashboardInfo);
-
   return (
     <section className="min-h-[90vh] pb-6 ">
       {isAddNewTab && <AddNewTab />}
 
-      <TabBar
-        name={dashboardInfo.find((item) => item.id === activeTab)?.name}
-      />
+      <TabBar />
       <div className="grid grid-cols-2 grid-rows-3 gap-4 h-90 md:h-110 px-4 pt-4 xl:max-w-[75%] mx-auto pb-4 my-auto ">
         {" "}
         {/* h controls Grid sizing  */}
@@ -34,10 +30,10 @@ export default function HotKeyActionTracker() {
           <Box1
             currentProgress={
               dashboardInfo.find((item) => item.id === activeTab)
-                ?.currentProgress
+                ?.currentProgress!
             }
             maxProgress={
-              dashboardInfo.find((item) => item.id === activeTab)?.maxProgress
+              dashboardInfo.find((item) => item.id === activeTab)?.maxProgress!
             }
             activeTab={activeTab}
           />
@@ -50,22 +46,15 @@ export default function HotKeyActionTracker() {
         </div>
         <div className="col-start-1 row-start-3 row-span-2 ">
           <Box3
-            hotkey={dashboardInfo.find((item) => item.id === activeTab)?.hotkey}
+            hotkey={
+              dashboardInfo.find((item) => item.id === activeTab)?.hotkey!
+            }
           />
         </div>
       </div>
       <div className="col-start-1 col-span-2 row-start-6 row-span-6 px-4 xl:max-w-[75%] mx-auto">
         <Box4
-          name={dashboardInfo.find((item) => item.id === activeTab)?.name}
-          currentProgress={
-            dashboardInfo.find((item) => item.id === activeTab)?.currentProgress
-          }
-          maxProgress={
-            dashboardInfo.find((item) => item.id === activeTab)?.maxProgress
-          }
-          totalCompletion={
-            dashboardInfo.find((item) => item.id === activeTab)?.totalCompletion
-          }
+          dashboardInfo={dashboardInfo.find((item) => item.id === activeTab)}
         />
         <div className="col-start-2 row-start-2 row-span-3  md:hidden pt-4">
           <Box5 />

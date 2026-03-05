@@ -18,18 +18,21 @@ export const useIsOpen = create<useIsOpen>((set) => ({
   setAddNewTab: (value) => set({ isAddNewTab: value }),
 }));
 
-type DashboardInfo = {
+export type DashboardInfo = {
   id: number;
   name: string;
-  progress: number;
-  currentHotkey: string;
-  currentConfiguration: string;
+  currentProgress: number;
+  maxProgress: number;
+  totalCompletion: number;
+  hotkey: string;
+  completionHistoryDate: string[];
+  completionAnimation: boolean;
 };
 
 type useDashboardInfo = {
-  dashboardInfo: DashboardItem[];
+  dashboardInfo: DashboardInfo[];
   setDashboardInfo: (newItem: DashboardItem) => void;
-  increaseProgress: (updatedItem: number) => void;
+  increaseProgress: (updatedItem: DashboardInfo) => void;
 };
 export const useDashboardInfo = create<useDashboardInfo>()(
   persist(
@@ -42,7 +45,8 @@ export const useDashboardInfo = create<useDashboardInfo>()(
           maxProgress: 3,
           totalCompletion: 0,
           hotkey: "F+1",
-          completionHistoryDate: ["1/2/3"],
+          completionHistoryDate: ["1/2/3", "2/2/3", "3/2/3", "4/2/3"],
+          completionAnimation: false,
         },
         {
           id: 2,
@@ -52,6 +56,7 @@ export const useDashboardInfo = create<useDashboardInfo>()(
           totalCompletion: 0,
           hotkey: "F+2",
           completionHistoryDate: ["1/2/3"],
+          completionAnimation: false,
         },
       ],
       setDashboardInfo: (newItem) =>
