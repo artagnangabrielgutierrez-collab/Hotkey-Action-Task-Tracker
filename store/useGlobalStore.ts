@@ -85,17 +85,15 @@ export const useDashboardInfo = create<useDashboardInfo>()(
             item.id === updatedItem.id ? updatedItem : item,
           ),
         })),
-      updateDashboardItem: (updatedItem) =>
+      updateDashboardItem: (id, updates) =>
         set((state) => ({
           dashboardInfo: state.dashboardInfo.map((item) =>
-            item.id === updatedItem.id ? { ...item, ...updatedItem } : item,
+            item.id === id ? { ...item, ...updates } : item,
           ),
         })),
     }),
     {
       name: "dashboard-info",
-      storage: createJSONStorage(() => typeof window !== 'undefined' ? localStorage : sessionStorage),
-      skipHydration: true,
     },
   ),
 );

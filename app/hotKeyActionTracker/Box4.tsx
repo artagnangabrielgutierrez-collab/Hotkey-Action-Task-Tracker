@@ -36,9 +36,9 @@ function SideArrow({
 }
 
 export default function Box4({ dashboardInfo }: Box4Props) {
-  const {id, name, currentProgress, maxProgress, description } = dashboardInfo;
+  const { name, currentProgress, maxProgress, description } = dashboardInfo;
   const progressPercentage = Math.round((currentProgress / maxProgress) * 100);
-  const updateDashboardItem = useDashboardInfo(state => state.updateDashboardItem)
+
   let motivationalQuote = undefined;
 
   if (progressPercentage <= 25) motivationalQuote = "Just getting started!";
@@ -48,7 +48,7 @@ export default function Box4({ dashboardInfo }: Box4Props) {
   else motivationalQuote = "Finished!!!";
 
   function decreaseCurrent() {}
-updateDashboardItem({id: id, currentProgress: currentProgress - 1})
+
   function increaseCurrent() {}
 
   function decreaseMax() {}
