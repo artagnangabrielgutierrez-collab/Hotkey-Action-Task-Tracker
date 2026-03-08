@@ -5,22 +5,15 @@ import {
   DashboardInfoType,
 } from "@/store/useGlobalStore";
 
-interface Box5Props {
+interface TaskCardProps {
   dashboardInfoItems: DashboardInfoType;
+  setActiveTab: (val: number) => void;
 }
 
-function TaskCard({
-  dashboardInfoItems,
-  setActiveTab,
-  tabNumber,
-  setTabNumber,
-}: Box5Props) {
-  const { id, name, hotkey, totalCompletion, completionAnimation } =
-    dashboardInfoItems;
+function TaskCard({ dashboardInfoItems, setActiveTab }: TaskCardProps) {
+  const { id, name, hotkey, totalCompletion } = dashboardInfoItems;
   function switchTab() {
     setActiveTab(id);
-    setTabNumber([id - 1, id]);
-    console.log(tabNumber);
   }
 
   return (
@@ -48,13 +41,17 @@ transition-shadow duration-300"
   );
 }
 
-export default function Box5() {
-  const dashboardInfo = useDashboardInfo((state) => state.dashboardInfo);
-  const activeTab = useActiveTab((state) => state.activeTab);
-  const setActiveTab = useActiveTab((state) => state.setActiveTab);
-  const tabNumber = useTabNumber((state) => state.tabNumber);
-  const setTabNumber = useTabNumber((state) => state.setTabNumber);
+interface Box5Props {
+  dashboardInfo: DashboardInfoType;
+  activeTab: number;
+  setActiveTab: (val: number) => void;
+}
 
+export default function Box5({
+  dashboardInfo,
+  activeTab,
+  setActiveTab,
+}: Box5Props) {
   return (
     <div
       className="group bg-[#00040f] border border-[#1d4ed8] rounded-lg text-[#bfdbfe] h-full hover:shadow-[0_4px_12px_2px_rgba(59,130,246,0.3),4px_0_8px_0px_rgba(59,130,246,0.15),-4px_0_8px_0px_rgba(59,130,246,0.15)]
@@ -75,8 +72,6 @@ transition-shadow duration-300"
                   key={e.id}
                   dashboardInfoItems={e}
                   setActiveTab={setActiveTab}
-                  tabNumber={tabNumber}
-                  setTabNumber={setTabNumber}
                 />
               ))}
           </div>

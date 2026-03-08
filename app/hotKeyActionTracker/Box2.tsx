@@ -1,23 +1,22 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useDashboardInfo, useActiveTab } from "@/store/useGlobalStore";
-export default function Box2({}) {
+import { DashboardInfoType } from "@/store/useGlobalStore";
+interface Box2Props {
+  currentDashboardInfo: DashboardInfoType;
+}
+export default function Box2({ currentDashboardInfo }: Box2Props) {
   const [completionHistoryCount, setCompletionHistoryCount] = useState(0);
-  const activeTab = useActiveTab((state) => state.activeTab);
-  const currentDashboardInfo = useDashboardInfo(
-    (state) => state.dashboardInfo[activeTab - 1],
-  );
 
   useEffect(() => {
-    const handler = () => {
+    const checkIfMobile = () => {
       const w = window.innerWidth;
       if (w >= 764) setCompletionHistoryCount(2);
       else setCompletionHistoryCount(4);
     };
-    handler();
-    window.addEventListener("resize", handler);
-    return () => window.removeEventListener("resize", handler);
+    checkIfMobile();
+    window.addEventListener("resize", checkIfMobile);
+    return () => window.removeEventListener("resize", checkIfMobile);
   }, []);
 
   return (

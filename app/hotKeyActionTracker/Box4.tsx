@@ -1,7 +1,14 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useDashboardInfo } from "@/store/useGlobalStore";
+import {
+  useDashboardInfo,
+  DashboardInfoType,
+  useDashboardInfoType,
+} from "@/store/useGlobalStore";
+type updateDashboardItem = useDashboardInfoType["updateDashboardItem"];
+
 interface Box4Props {
-  dashboardInfo: any; //Placeholder
+  currentDashboardInfo: DashboardInfoType;
+  updateDashboardItem: updateDashboardItem;
 }
 
 const btnCls =
@@ -38,11 +45,12 @@ transition-shadow duration-300"
   );
 }
 
-export default function Box4({ dashboardInfo }: Box4Props) {
-  const { id, name, currentProgress, maxProgress, description } = dashboardInfo;
-  const updateDashboardItem = useDashboardInfo(
-    (state) => state.updateDashboardItem,
-  );
+export default function Box4({
+  currentDashboardInfo,
+  updateDashboardItem,
+}: Box4Props) {
+  const { id, name, currentProgress, maxProgress, description } =
+    currentDashboardInfo;
   const progressPercentage = Math.round((currentProgress / maxProgress) * 100);
 
   let motivationalQuote = undefined;
@@ -90,8 +98,10 @@ export default function Box4({ dashboardInfo }: Box4Props) {
               leftArrowClick={decreaseCurrent}
               rightArrowClick={increaseCurrent}
             />
-            <div className="w-full p-1 rounded-sm bg-gradient-to-r from-[#1e3a8a]/60 via-[#2563eb] to-[#3b82f6] border
-             border-[#3b82f6]/30 shadow-[0_0_8px_rgba(59,130,246,0.4)] ">
+            <div
+              className="w-full p-1 rounded-sm bg-linear-to-r from-[#1e3a8a]/60 via-[#2563eb] to-[#3b82f6] border
+             border-[#3b82f6]/30 shadow-[0_0_8px_rgba(59,130,246,0.4)] "
+            >
               <span className="pl-[5%]">{motivationalQuote}</span>
             </div>
           </div>
@@ -101,8 +111,10 @@ export default function Box4({ dashboardInfo }: Box4Props) {
           <div className="flex flex-row items-center gap-4 justify-end">
             {/*  */}
             <div className="flex flex-row items-center gap-4 justify-start w-full ">
-              <div className="bg-[#000d1f] border border-[#1d4ed8] rounded-lg text-[#bfdbfe] p-3 flex flex-col text-center w-full hover:shadow-[0_4px_12px_2px_rgba(192,192,192,0.3),4px_0_8px_0px_rgba(192,192,192,0.15),-4px_0_8px_0px_rgba(192,192,192,0.15)]
-transition-shadow duration-300">
+              <div
+                className="bg-[#000d1f] border border-[#1d4ed8] rounded-lg text-[#bfdbfe] p-3 flex flex-col text-center w-full hover:shadow-[0_4px_12px_2px_rgba(192,192,192,0.3),4px_0_8px_0px_rgba(192,192,192,0.15),-4px_0_8px_0px_rgba(192,192,192,0.15)]
+transition-shadow duration-300"
+              >
                 <p className="text-xs line-clamp-2">{description}</p>
               </div>
             </div>

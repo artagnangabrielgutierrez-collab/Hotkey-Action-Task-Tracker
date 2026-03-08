@@ -1,31 +1,30 @@
-import { useDashboardInfo } from "@/store/useGlobalStore";
+import {
+  DashboardInfoType,
+  useDashboardInfoType,
+} from "@/store/useGlobalStore";
+
+type updateDashboardItem = useDashboardInfoType["updateDashboardItem"];
 
 interface Box1Props {
-  currentProgress: number;
-  maxProgress: number;
-  activeTab: number;
+  currentDashboardInfo: DashboardInfoType;
+  updateDashboardItem: updateDashboardItem;
 }
 
 export default function Box1({
-  currentProgress,
-  maxProgress,
-  activeTab,
+  currentDashboardInfo,
+  updateDashboardItem,
 }: Box1Props) {
-  const { dashboardInfo, increaseProgress } = useDashboardInfo();
-
-  function handleIncrease() {
-    const current = dashboardInfo.find((item) => item.id === activeTab);
-    if (!current || currentProgress >= maxProgress) return;
-    increaseProgress({
-      ...current,
-      currentProgress: current.currentProgress + 1,
-    });
-  }
-
+  if (!currentDashboardInfo) return;
+  const { id, currentProgress, maxProgress } = currentDashboardInfo;
   const percentage = Math.min(
     Math.round((currentProgress / maxProgress) * 100),
     100,
   );
+
+  function handleIncrease() {
+    if (currentProgress + 1 > maxProgress) return null; //i might change "1" in the future
+    updateDashboardItem(id, { currentProgress: currentProgress + 1 });
+  }
 
   return (
     <div

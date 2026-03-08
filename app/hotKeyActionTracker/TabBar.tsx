@@ -5,10 +5,11 @@ import {
   useActiveTab,
   useIsOpen,
   useTabNumber,
+  DashboardInfoType,
 } from "@/store/useGlobalStore";
-interface TabBarprops {}
 import { Zap, Award, Menu } from "lucide-react";
-export default function TabBar({}: TabBarprops) {
+
+export default function TabBar() {
   const tabName = useDashboardInfo((state) => state.dashboardInfo);
   const setAddNewTab = useIsOpen((state) => state.setAddNewTab);
   const tabNumber = useTabNumber((state) => state.tabNumber);
@@ -35,7 +36,7 @@ export default function TabBar({}: TabBarprops) {
 
   function viewPrevTabs() {
     setTabNumber([tabNumber[0] - 1, tabNumber[1] - 1]);
-    if (isMobile) setActiveTab(activeTab - 1);
+    if (isMobile) setActiveTab(activeTab);
   }
 
   function viewNextTabs() {
@@ -53,7 +54,7 @@ export default function TabBar({}: TabBarprops) {
           >
             &lt; {/* < */}
           </button>
-          {tabName.slice(tabNumber[0], tabNumber[1] + maxTabs).map((tab) => {
+          {tabName.slice(tabNumber[0], tabNumber[1] + maxTabs).map((tab: {id: number, name: string}) => {
             const isActive = tab.id === activeTab;
             return (
               <section key={tab.id}>
@@ -137,7 +138,7 @@ export default function TabBar({}: TabBarprops) {
           >
             ✕
           </button>
-          {dashboardInfo.map((e) => (
+          {dashboardInfo.map((e: DashboardInfoType) => (
             <div
               key={e.id}
               className="px-4 py-2.5 text-sm text-white/70 hover:text-white hover:bg-white/10 cursor-pointer border-b border-white/5 last:border-none transition-colors font-medium"

@@ -3,6 +3,7 @@ import {
   useDashboardInfo,
   useActiveTab,
   useIsOpen,
+  DashboardInfoType,
 } from "@/store/useGlobalStore";
 import AddNewTab from "./AddNewTab";
 import Box1 from "./Box1";
@@ -14,52 +15,56 @@ import TabBar from "./TabBar";
 
 export default function HotKeyActionTracker() {
   const dashboardInfo = useDashboardInfo((state) => state.dashboardInfo);
-  
+  const updateDashboardItem = useDashboardInfo(
+    (state) => state.updateDashboardItem,
+  );
   const activeTab = useActiveTab((state) => state.activeTab);
-  const isAddNewTab = useIsOpen((state) => state.isAddNewTab);
+  const setActiveTab = useActiveTab((state) => state.setActiveTab);
+  const currentDashboardInfo = dashboardInfo.find(
+    (item: DashboardInfoType) => item.id === activeTab,
+  );
 
+  const isAddNewTab = useIsOpen((state) => state.isAddNewTab);
 
   return (
     <section className="min-h-[90vh] pb-6 ">
-
       {isAddNewTab && <AddNewTab />}
 
       <TabBar />
       <div className="grid grid-cols-2 grid-rows-3 gap-4 h-90 md:h-110 px-4 pt-4 xl:max-w-[75%] mx-auto pb-4 my-auto ">
         {" "}
-        {/* h controls Grid sizing  */}
+        {/* "h" controls Grid sizing  */}
         <div className="col-start-1 row-start-1 row-span-2">
           <Box1
-            currentProgress={
-              dashboardInfo.find((item) => item.id === activeTab)
-                ?.currentProgress!
-            }
-            maxProgress={
-              dashboardInfo.find((item) => item.id === activeTab)?.maxProgress!
-            }
-            activeTab={activeTab}
+            currentDashboardInfo={currentDashboardInfo}
+            updateDashboardItem={updateDashboardItem}
           />
         </div>
         <div className="col-start-2 row-start-1 row-span-4 md:row-span-1">
-          <Box2 />
+          <Box2 currentDashboardInfo={currentDashboardInfo} />
         </div>
         <div className="col-start-2 row-start-2 row-span-3 hidden md:block">
-          <Box5 />
+          <Box5
+            dashboardInfo={dashboardInfo}
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+          />
         </div>
         <div className="col-start-1 row-start-3 row-span-2 ">
-          <Box3
-            hotkey={
-              dashboardInfo.find((item) => item.id === activeTab)?.hotkey!
-            }
-          />
+          <Box3 hotkey={currentDashboardInfo?.hotkey!} />
         </div>
       </div>
       <div className="col-start-1 col-span-2 row-start-6 row-span-6 px-4 xl:max-w-[75%] mx-auto">
         <Box4
-          dashboardInfo={dashboardInfo.find((item) => item.id === activeTab)}
+          currentDashboardInfo={currentDashboardInfo}
+          updateDashboardItem={updateDashboardItem}
         />
         <div className="col-start-2 row-start-2 row-span-3  md:hidden pt-4">
-          <Box5 />
+          <Box5
+            dashboardInfo={dashboardInfo}
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+          />
         </div>
       </div>
     </section>
