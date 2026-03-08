@@ -26,8 +26,8 @@ function TaskCard({
   return (
     <div
       className="flex flex-col gap-1 p-2 rounded-lg border border-[#1d4ed8]/50 bg-[#00040f]/50 
-     hover:shadow-[0_4px_12px_2px_rgba(59,130,246,0.3),4px_0_8px_0px_rgba(59,130,246,0.15),-4px_0_8px_0px_rgba(59,130,246,0.15)] 
-     transition-shadow duration-300"
+    hover:shadow-[0_4px_12px_2px_rgba(192,192,192,0.3),4px_0_8px_0px_rgba(192,192,192,0.15),-4px_0_8px_0px_rgba(192,192,192,0.15)]
+transition-shadow duration-300"
       onClick={() => switchTab()}
     >
       <div className="flex items-center gap-2 px-2">
@@ -56,7 +56,10 @@ export default function Box5() {
   const setTabNumber = useTabNumber((state) => state.setTabNumber);
 
   return (
-    <div className="group bg-[#00040f] border border-[#1d4ed8] rounded-lg text-[#bfdbfe] h-full">
+    <div
+      className="group bg-[#00040f] border border-[#1d4ed8] rounded-lg text-[#bfdbfe] h-full hover:shadow-[0_4px_12px_2px_rgba(59,130,246,0.3),4px_0_8px_0px_rgba(59,130,246,0.15),-4px_0_8px_0px_rgba(59,130,246,0.15)]
+transition-shadow duration-300"
+    >
       <div
         className={`bg-[#000d1f] border border-[#3b82f6] rounded-lg w-full h-full flex flex-col text-sm p-4 `}
       >

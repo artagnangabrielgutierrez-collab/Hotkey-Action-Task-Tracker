@@ -19,15 +19,18 @@ function SideArrow({
   rightArrowClick: () => void;
 }) {
   return (
-    <div className="bg-[#000d1f] border border-[#1d4ed8] rounded-lg text-[#bfdbfe] p-3 flex flex-col text-center">
-      <div className="flex flex-row justify-center items-center gap-2">
+    <div
+      className="bg-[#000d1f] border border-[#1d4ed8] rounded-lg text-[#bfdbfe] p-3 flex flex-col text-center hover:shadow-[0_4px_12px_2px_rgba(192,192,192,0.3),4px_0_8px_0px_rgba(192,192,192,0.15),-4px_0_8px_0px_rgba(192,192,192,0.15)]
+transition-shadow duration-300"
+    >
+      <div className="flex flex-row justify-center items-center gap-2 ">
         {/* left arrow */}
         <button className={btnCls} onClick={leftArrowClick}>
           <ChevronLeft size={16} strokeWidth={2.5} />
         </button>
         <span className={valueCls}>{value}</span>
         {/* rigth arrow */}
-        <button className={btnCls}>
+        <button className={btnCls} onClick={rightArrowClick}>
           <ChevronRight size={16} strokeWidth={2.5} />
         </button>
       </div>
@@ -36,7 +39,10 @@ function SideArrow({
 }
 
 export default function Box4({ dashboardInfo }: Box4Props) {
-  const { name, currentProgress, maxProgress, description } = dashboardInfo;
+  const { id, name, currentProgress, maxProgress, description } = dashboardInfo;
+  const updateDashboardItem = useDashboardInfo(
+    (state) => state.updateDashboardItem,
+  );
   const progressPercentage = Math.round((currentProgress / maxProgress) * 100);
 
   let motivationalQuote = undefined;
@@ -47,13 +53,21 @@ export default function Box4({ dashboardInfo }: Box4Props) {
   else if (progressPercentage <= 99) motivationalQuote = "Almost there!";
   else motivationalQuote = "Finished!!!";
 
-  function decreaseCurrent() {}
+  function decreaseCurrent() {
+    updateDashboardItem(id, { currentProgress: currentProgress - 1 });
+  }
 
-  function increaseCurrent() {}
+  function increaseCurrent() {
+    updateDashboardItem(id, { currentProgress: currentProgress + 1 });
+  }
 
-  function decreaseMax() {}
+  function decreaseMax() {
+    updateDashboardItem(id, { maxProgress: maxProgress - 1 });
+  }
 
-  function increasemax() {}
+  function increasemax() {
+    updateDashboardItem(id, { maxProgress: maxProgress + 1 });
+  }
 
   return (
     <div className="group bg-[#00040f] border border-[#1d4ed8] rounded-lg text-[#bfdbfe] h-full">
@@ -76,7 +90,8 @@ export default function Box4({ dashboardInfo }: Box4Props) {
               leftArrowClick={decreaseCurrent}
               rightArrowClick={increaseCurrent}
             />
-            <div className="w-full p-1 rounded-sm bg-gradient-to-r from-[#1e3a8a]/60 via-[#2563eb] to-[#3b82f6] border border-[#3b82f6]/30 shadow-[0_0_8px_rgba(59,130,246,0.4)]">
+            <div className="w-full p-1 rounded-sm bg-gradient-to-r from-[#1e3a8a]/60 via-[#2563eb] to-[#3b82f6] border
+             border-[#3b82f6]/30 shadow-[0_0_8px_rgba(59,130,246,0.4)] ">
               <span className="pl-[5%]">{motivationalQuote}</span>
             </div>
           </div>
@@ -86,7 +101,8 @@ export default function Box4({ dashboardInfo }: Box4Props) {
           <div className="flex flex-row items-center gap-4 justify-end">
             {/*  */}
             <div className="flex flex-row items-center gap-4 justify-start w-full ">
-              <div className="bg-[#000d1f] border border-[#1d4ed8] rounded-lg text-[#bfdbfe] p-3 flex flex-col text-center w-full ">
+              <div className="bg-[#000d1f] border border-[#1d4ed8] rounded-lg text-[#bfdbfe] p-3 flex flex-col text-center w-full hover:shadow-[0_4px_12px_2px_rgba(192,192,192,0.3),4px_0_8px_0px_rgba(192,192,192,0.15),-4px_0_8px_0px_rgba(192,192,192,0.15)]
+transition-shadow duration-300">
                 <p className="text-xs line-clamp-2">{description}</p>
               </div>
             </div>

@@ -14,7 +14,7 @@ import TabBar from "./TabBar";
 
 export default function HotKeyActionTracker() {
   const dashboardInfo = useDashboardInfo((state) => state.dashboardInfo);
-
+  
   const activeTab = useActiveTab((state) => state.activeTab);
   const isAddNewTab = useIsOpen((state) => state.isAddNewTab);
 
