@@ -4,7 +4,10 @@ import {
   useActiveTab,
   useTabNumber,
   DashboardInfoType,
+  useDashboardInfoType,
 } from "@/store/useGlobalStore";
+
+type updateDashboardItem = useDashboardInfoType["updateDashboardItem"];
 
 interface TaskCardProps {
   dashboardInfo: DashboardInfoType;
@@ -19,7 +22,6 @@ function TaskCard({
 }: TaskCardProps) {
   const { id, name, hotkey, currentProgress, maxProgress } = dashboardInfo;
   const tabNumber = useTabNumber((state) => state.tabNumber);
-  const activeTab = useActiveTab((state) => state.activeTab);
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -34,10 +36,7 @@ function TaskCard({
 
   function switchTab() {
     setActiveTab(id);
-    console.log(tabNumber[0], tabNumber[1]);
-    if (isMobile) {
-      setTabNumber([id - 1, id]);
-    }
+    if (isMobile) setTabNumber([id - 1, id]);
   }
 
   return (
@@ -45,7 +44,7 @@ function TaskCard({
       className="flex flex-col gap-1 p-2 rounded-lg border border-[#1d4ed8]/50 bg-[#00040f]/50 
     hover:shadow-[0_4px_12px_2px_rgba(192,192,192,0.3),4px_0_8px_0px_rgba(192,192,192,0.15),-4px_0_8px_0px_rgba(192,192,192,0.15)]
 transition-shadow duration-300"
-      onClick={() => switchTab()}
+      onClick={switchTab}
     >
       <div className="flex items-center gap-2 px-2">
         <span className="text-[#93c5fd]">Name:</span>
@@ -71,7 +70,8 @@ interface Box5Props {
   dashboardInfo: DashboardInfoType[];
   activeTab: number;
   setActiveTab: (val: number) => void;
-  setTabNumber: any; //temp
+  setTabNumber: any;
+  updateDashboardItem: updateDashboardItem;
 }
 
 export default function Box5({
@@ -79,23 +79,59 @@ export default function Box5({
   activeTab,
   setActiveTab,
   setTabNumber,
+  updateDashboardItem,
 }: Box5Props) {
+  
+  //For increasing progress with hotkey
+  useEffect(() => {
+    const heldKeys = new Set<string>();
+
+    function handleKeyDown(e: KeyboardEvent) {
+      heldKeys.add(e.key);
+      console.log("held keys:", [...heldKeys]);
+      dashboardInfo.forEach((item) => {
+        const key = [...heldKeys].join("");
+        if (key === item.hotkey) {
+          const newProgress = item.currentProgress + 1;
+          if (newProgress >= item.maxProgress) {
+            updateDashboardItem(item.id, {
+              currentProgress: 0,
+              totalCompletion: item.totalCompletion + 1,
+            });
+            
+          } else {
+            updateDashboardItem(item.id, { currentProgress: newProgress });
+          }
+        }
+      });
+    }
+
+    function handleKeyUp(e: KeyboardEvent) {
+      heldKeys.delete(e.key);
+    }
+
+    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("keyup", handleKeyUp);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("keyup", handleKeyUp);
+    };
+  }, [dashboardInfo]);
+
   return (
     <div
       className="group bg-[#00040f] border border-[#1d4ed8] rounded-lg text-[#bfdbfe] h-full hover:shadow-[0_4px_12px_2px_rgba(59,130,246,0.3),4px_0_8px_0px_rgba(59,130,246,0.15),-4px_0_8px_0px_rgba(59,130,246,0.15)]
 transition-shadow duration-300"
     >
-      <div
-        className={`bg-[#000d1f] border border-[#3b82f6] rounded-lg w-full h-full flex flex-col text-sm p-4 `}
-      >
+      <div className="bg-[#000d1f] border border-[#3b82f6] rounded-lg w-full h-full flex flex-col text-sm p-4">
         <h1 className="pb-2 text-sm text-[#93c5fd] uppercase tracking-wide border-b border-[#3b82f6]/40">
           Other Tasks List
         </h1>
-        <div className="mt-2 flex-1 w-full ">
-          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 bg-">
+        <div className="mt-2 flex-1 w-full">
+          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {dashboardInfo
               .filter((e) => e.id != activeTab)
-              .map((e, i) => (
+              .map((e) => (
                 <TaskCard
                   key={e.id}
                   dashboardInfo={e}

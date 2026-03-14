@@ -139,7 +139,7 @@ export default function Box4({
               <div
                 className="bg-[#000d1f] border border-[#1d4ed8] rounded-lg text-[#bfdbfe] p-3 flex flex-col text-center w-full hover:shadow-[0_4px_12px_2px_rgba(192,192,192,0.3),4px_0_8px_0px_rgba(192,192,192,0.15),-4px_0_8px_0px_rgba(192,192,192,0.15)]
 transition-shadow duration-300"
-onClick={() => setIsDescriptionEdit(true)}
+                onClick={() => setIsDescriptionEdit(true)}
               >
                 <p className="text-xs line-clamp-2">{description}</p>
               </div>

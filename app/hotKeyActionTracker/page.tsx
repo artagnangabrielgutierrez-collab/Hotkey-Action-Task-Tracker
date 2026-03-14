@@ -75,7 +75,6 @@ export default function HotKeyActionTracker() {
           <Box1
             currentDashboardInfo={currentDashboardInfo}
             updateDashboardItem={updateDashboardItem}
-            dashboardInfo={dashboardInfo}
           />
         </div>
         <div className="col-start-2 row-start-1 row-span-4 md:row-span-1">
@@ -87,6 +86,8 @@ export default function HotKeyActionTracker() {
             activeTab={activeTab}
             setActiveTab={setActiveTab}
             setTabNumber={setTabNumber}
+            updateDashboardItem={updateDashboardItem}
+            
           />
         </div>
         <div className="col-start-1 row-start-3 row-span-2 ">
@@ -105,6 +106,7 @@ export default function HotKeyActionTracker() {
             setActiveTab={setActiveTab}
             setTabNumber={setTabNumber}
             updateDashboardItem={updateDashboardItem}
+            
           />
         </div>
       </div>

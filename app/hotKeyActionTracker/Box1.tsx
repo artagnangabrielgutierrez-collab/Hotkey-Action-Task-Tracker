@@ -1,11 +1,12 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useReducer } from "react";
 
 import {
   DashboardInfoType,
   useDashboardInfoType,
+  useDashboardInfo,
 } from "@/store/useGlobalStore";
-import { Award } from "lucide-react";
+import { Award, Settings } from "lucide-react";
 type updateDashboardItem = useDashboardInfoType["updateDashboardItem"];
 
 interface Box1Props {
@@ -16,7 +17,6 @@ interface Box1Props {
 export default function Box1({
   currentDashboardInfo,
   updateDashboardItem,
-  dashboardInfo,
 }: Box1Props) {
   if (!currentDashboardInfo) return;
   // prettier-ignore
@@ -25,7 +25,7 @@ export default function Box1({
     Math.round((currentProgress / maxProgress) * 100),
     100,
   );
-
+  const dashboardInfo = useDashboardInfo((state) => state.dashboardInfo); //for debugging only
   function handleManualIncrease() {
     updateDashboardItem(id, { currentProgress: currentProgress + 1 });
     if (currentProgress + 1 === maxProgress) {
@@ -34,9 +34,22 @@ export default function Box1({
         totalCompletion: totalCompletion + 1,
       });
     }
+    console.log(dashboardInfo);
   }
 
+  //this is temp, move later
+  const reducer = (state: any, action: any) => {
+    switch (action.type) {
+      case "INCREMENT":
+        return { count: state.count + 1 };
+      case "DECREMENT":
+        return { count: state.count - 1 };
+      default:
+        return state;
+    }
+  };
 
+  const [state, dispatch] = useReducer(reducer, { count: 0 });
 
   return (
     <div
@@ -81,12 +94,15 @@ export default function Box1({
           </span>
         </div>
         {/* Increase button */}
-        <div className="absolute bottom-4 left-0 right-0 flex justify-center z-10">
+        <div className="absolute bottom-4 left-0 right-0 flex justify-center z-10 gap-2">
           <button
-            className="px-4 py-2 font-semibold text-[#bfdbfe] rounded-lg border border-[#3b82f6] shadow-lg transition-all duration-300 transform bg-linear-to-r from-[#1d4ed8] to-[#3b82f6] hover:from-[#2563eb] hover:to-[#60a5fa] hover:shadow-[#3b82f6]/50 hover:scale-105 text-[1em] xl:text-[1.5em]"
+            className="px-2 py-1 text-sm font-semibold text-[#bfdbfe] rounded-lg border border-[#3b82f6] shadow-lg transition-all duration-300 transform bg-linear-to-r from-[#1d4ed8] to-[#3b82f6] hover:from-[#2563eb] hover:to-[#60a5fa] hover:shadow-[#3b82f6]/50 hover:scale-105"
             onClick={handleManualIncrease}
           >
             Increase
+          </button>
+          <button className="p-1 text-[#bfdbfe] rounded-lg border border-[#3b82f6] shadow-lg transition-all duration-300 transform bg-linear-to-r from-[#1d4ed8] to-[#3b82f6] hover:from-[#2563eb] hover:to-[#60a5fa] hover:shadow-[#3b82f6]/50 hover:scale-105">
+            <Settings size={16} />
           </button>
         </div>
       </div>

@@ -2,9 +2,7 @@
 import { useForm } from "react-hook-form";
 import { useIsOpen } from "@/store/useGlobalStore";
 import { DashboardInfoType } from "@/store/useGlobalStore";
-{
-  /* 70% AI because this is only a prototype, fix later, not complete*/
-}
+
 type AddNewTabProps = {
   dashboardInfo: DashboardInfoType[];
   setDashboardInfo: (val: DashboardInfoType) => void;
@@ -13,7 +11,6 @@ type AddNewTabProps = {
 type formInput = {
   name: string;
   maxProgress: number;
-  maxCompletion: number;
   hotkey1: string;
   hotkey2: string;
   description: string;
@@ -23,9 +20,8 @@ const PLACEHOLDER_DATA = {
   name: "Screen BreakTime",
   description: "Step away from the screen every hour for at least 5 minutes",
   maxProgress: 5,
-  maxCompletion: 10,
-  hotkey1: "F",
-  hotkey2: "2",
+  hotkey1: "2",
+  hotkey2: "F",
 };
 
 export default function AddNewTab({
@@ -57,9 +53,8 @@ export default function AddNewTab({
       name: data.name,
       currentProgress: 0,
       maxProgress: Number(data.maxProgress),
-      maxCompletion: Number(data.maxCompletion),
       totalCompletion: 0,
-      hotkey: `${data.hotkey1}+${data.hotkey2}`,
+      hotkey: `${data.hotkey1}${data.hotkey2}`,
       completionHistoryDate: [],
       completionAnimation: false,
       description: data.description,
@@ -108,36 +103,46 @@ export default function AddNewTab({
               className={`rounded-lg border border-[#334155] bg-[#020617] px-4 py-2 text-slate-100 outline-none ${errors.description ? errorClass : ""}`}
             />
             <div className="flex flex-row w-full gap-3">
+              <label htmlFor="maxProgress" className="text-xs text-center">
+                Max progress to complete
+              </label>
               <input
                 {...register("maxProgress", { required: true })}
                 type="number"
-                placeholder="Completions required (e.g. 5)"
+                placeholder="(e.g. 5)"
                 onKeyDown={(e) =>
                   ["ArrowUp", "ArrowDown"].includes(e.key) && e.preventDefault()
                 }
                 className={`rounded-lg border border-[#334155] bg-[#020617] px-4 py-2 text-slate-100 outline-none w-full [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none ${errors.maxProgress ? errorClass : ""}`}
               />
-              <input
-                {...register("maxCompletion", { required: true })}
-                type="number"
-                placeholder="Max completions (e.g. 10)"
-                onKeyDown={(e) =>
-                  ["ArrowUp", "ArrowDown"].includes(e.key) && e.preventDefault()
-                }
-                className={`rounded-lg border border-[#334155] bg-[#020617] px-4 py-2 text-slate-100 outline-none w-full [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none ${errors.maxCompletion ? errorClass : ""}`}
-              />
             </div>
-            <p className="text-slate-400 text-sm">placeholder</p>
+            <p className="text-slate-400 text-sm text-center">
+              Hotkey combination (one Number + one Letter)
+            </p>
             <div className="flex flex-row w-full items-center gap-2">
               <input
-                {...register("hotkey1", { required: true })}
-                placeholder="First Hotkey (e.g. F)"
+                {...register("hotkey1", {
+                  required: true,
+                  maxLength: 1,
+                  pattern: /^[1-9]$/,
+                })}
+                placeholder="Number"
+                maxLength={1}
+                onKeyDown={(e) => {
+                  if (
+                    !/^[1-9]$/.test(e.key) &&
+                    !["Backspace", "Delete", "Tab"].includes(e.key)
+                  ) {
+                    e.preventDefault();
+                  }
+                }}
                 className={`rounded-lg border border-[#334155] bg-[#020617] px-4 py-2 text-slate-100 outline-none w-full ${errors.hotkey1 ? errorClass : ""}`}
               />
               <span className="text-slate-100 font-bold">+</span>
               <input
-                {...register("hotkey2", { required: true })}
-                placeholder="Second Hotkey (e.g. 1)"
+                {...register("hotkey2", { required: true, maxLength: 1 })}
+                placeholder="Letter"
+                maxLength={1}
                 className={`rounded-lg border border-[#334155] bg-[#020617] px-4 py-2 text-slate-100 outline-none w-full ${errors.hotkey2 ? errorClass : ""}`}
               />
               <span className="text-slate-400 text-[0.75rem] whitespace-nowrap">

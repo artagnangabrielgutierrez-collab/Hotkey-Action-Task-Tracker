@@ -1,12 +1,15 @@
 "use client";
 import { useState } from "react";
+import { useIsOpen, DashboardInfoType, useDashboardInfoType } from "@/store/useGlobalStore";
 
-import { useIsOpen } from "@/store/useGlobalStore";
-
+type EditHotkeyProps = {
+  currentDashboardInfo: DashboardInfoType;
+  updateDashboardItem: useDashboardInfoType["updateDashboardItem"];
+};
 export default function EditHotkey({
   currentDashboardInfo,
   updateDashboardItem,
-}) {
+}: EditHotkeyProps) {
   const { id } = currentDashboardInfo;
   const setIsHotkeyEdit = useIsOpen((state) => state.setIsHotkeyEdit);
   const [newhotkeyValue, setNewhotkeyValue] = useState("");

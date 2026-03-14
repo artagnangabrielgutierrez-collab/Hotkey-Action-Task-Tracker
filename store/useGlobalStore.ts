@@ -11,6 +11,12 @@ type useIsOpen = {
 
   isTabMenu: boolean;
   setIsTabMenu: (value: boolean) => void;
+
+  isHotkeyEdit: boolean;
+  setIsHotkeyEdit: (value: boolean) => void;
+
+  isDescriptionEdit: boolean;
+  setIsDescriptionEdit: (value: boolean) => void;
 };
 
 export const useIsOpen = create<useIsOpen>((set) => ({
@@ -61,7 +67,7 @@ export const useDashboardInfo = create<useDashboardInfo>()(
           currentProgress: 1,
           maxProgress: 3,
           totalCompletion: 0,
-          hotkey: "Q",
+          hotkey: "1q",
           completionHistoryDate: [
             { time: "1/2/3" },
             { time: "1/2/3" },
@@ -94,7 +100,7 @@ export const useDashboardInfo = create<useDashboardInfo>()(
           currentProgress: 0,
           maxProgress: 3,
           totalCompletion: 0,
-          hotkey: "W",
+          hotkey: "",
           completionHistoryDate: [
             { time: "1/2/3" },
             { time: "1/2/3" },
