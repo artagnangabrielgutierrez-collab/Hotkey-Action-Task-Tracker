@@ -67,7 +67,7 @@ export const useDashboardInfo = create<useDashboardInfo>()(
           currentProgress: 1,
           maxProgress: 3,
           totalCompletion: 0,
-          hotkey: "1q",
+          hotkey: "1Q",
           completionHistoryDate: [{ time: "3/15/2026, 12:51:59 PM" }],
           completionAnimation: false,
           description: "Drink water every 30 minutes, 8 cups total per day",
