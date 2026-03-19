@@ -1,5 +1,6 @@
+"use client";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useReducer,  } from "react";
+import { useReducer, useEffect, useRef } from "react";
 import {
   DashboardInfoType,
   useDashboardInfoType,
@@ -90,6 +91,19 @@ export default function Box4({
     currentProgress,
     maxProgress,
   });
+
+const isMounted = useRef(false);
+
+useEffect(() => {
+  if (!isMounted.current) {
+    isMounted.current = true;
+    return;
+  }
+  updateDashboardItem(id, {
+    currentProgress: state.currentProgress,
+    maxProgress: state.maxProgress,
+  });
+}, [state.currentProgress, state.maxProgress]);
 
   const progressPercentage = Math.round(
     (state.currentProgress / state.maxProgress) * 100,
