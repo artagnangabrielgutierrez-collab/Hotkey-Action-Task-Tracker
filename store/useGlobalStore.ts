@@ -154,28 +154,54 @@ export const useProgress = create<ProgressStore>((set) => ({
   maxProgress: 0,
   decreaseCurrent: () =>
     set((state) => {
-      if (state.currentProgress <= 0) return state;
-      if (state.currentProgress - 1 >= state.maxProgress) return state;
+      if (state.currentProgress <= 0) {
+        window.alert("Current progress cannot go below 0.");
+        return state;
+      }
+      if (state.currentProgress - 1 >= state.maxProgress) {
+        window.alert(
+          "Current progress cannot reach or exceed the max progress.",
+        );
+        return state;
+      }
       return { currentProgress: state.currentProgress - 1 };
     }),
   increaseCurrent: () =>
     set((state) => {
-      if (state.currentProgress >= 99) return state;
-      if (state.currentProgress + 1 >= state.maxProgress) return state;
+      if (state.currentProgress >= 99) {
+        window.alert("Current progress has reached the limit of 99.");
+        return state;
+      }
+      if (state.currentProgress + 1 >= state.maxProgress) {
+        window.alert(
+          "Current progress cannot reach or exceed the max progress.",
+        );
+        return state;
+      }
       return { currentProgress: state.currentProgress + 1 };
     }),
   decreaseMax: () =>
     set((state) => {
-      if (
-        state.maxProgress <= 1 ||
-        state.currentProgress >= state.maxProgress - 1
-      )
+      if (state.maxProgress <= 1) {
+        window.alert("Max progress cannot go below 1.");
         return state;
+      }
+      if (state.currentProgress >= state.maxProgress - 1) {
+        window.alert(
+          "Max progress cannot be lower than or equal to the current progress.",
+        );
+        return state;
+      }
       return { maxProgress: state.maxProgress - 1 };
     }),
   increaseMax: () =>
     set((state) => {
-      if (state.currentProgress >= 99) return state;
+      if (state.currentProgress >= 99) {
+        window.alert(
+          "Cannot increase max progress when current progress is at the limit of 99.",
+        );
+        return state;
+      }
       return { maxProgress: state.maxProgress + 1 };
     }),
   setInitialValue: (currentProgress: number, maxProgress: number) =>
