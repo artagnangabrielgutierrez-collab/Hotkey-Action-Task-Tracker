@@ -4,7 +4,7 @@ import Link from "next/link";
 import "./globals.css";
 import { useIsOpen, useDashboardInfo } from "@/store/useGlobalStore";
 import { useEffect } from "react";
-
+import { motion, AnimatePresence } from "framer-motion";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -72,13 +72,23 @@ function Navbar() {
         </div>
       </nav>
       {isMenuOpen && (
-        <section className="flex flex-row items-center justify-center gap-10 md:hidden">
-          {links.map((e, i) => (
-            <Link key={i} href={e.href} className=" py-1 pl-5 ">
-              {e.label}
-            </Link>
-          ))}
-        </section>
+        <AnimatePresence>
+          <motion.section
+            className="flex flex-row items-center justify-center gap-10 md:hidden"
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+
+            transition={{ duration: 0.50 }}
+          >
+            <div className="bg-slate-900 w-full flex justify-center">
+              {links.map((e, i) => (
+                <Link key={i} href={e.href} className="py-1 pl-5">
+                  {e.label}
+                </Link>
+              ))}
+            </div>
+          </motion.section>
+        </AnimatePresence>
       )}
     </>
   );

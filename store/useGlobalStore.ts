@@ -1,6 +1,7 @@
 //@ts-nocheck
 
 import { create } from "zustand";
+
 import { persist, createJSONStorage } from "zustand/middleware";
 type useIsOpen = {
   isMenuOpen: boolean;
@@ -136,4 +137,47 @@ type useTabNumberProps = {
 export const useTabNumber = create<useTabNumberProps>((set) => ({
   tabNumber: [0, 1],
   setTabNumber: (val) => set({ tabNumber: val }),
+}));
+
+interface ProgressStore {
+  currentProgress: number;
+  maxProgress: number;
+  decreaseCurrent: () => void;
+  increaseCurrent: () => void;
+  decreaseMax: () => void;
+  increaseMax: () => void;
+  setInitialValue: (currentProgress: number, maxProgress: number) => void;
+}
+
+export const useProgress = create<ProgressStore>((set) => ({
+  currentProgress: 0,
+  maxProgress: 0,
+  decreaseCurrent: () =>
+    set((state) => {
+      if (state.currentProgress <= 0) return state;
+      if (state.currentProgress - 1 >= state.maxProgress) return state;
+      return { currentProgress: state.currentProgress - 1 };
+    }),
+  increaseCurrent: () =>
+    set((state) => {
+      if (state.currentProgress >= 99) return state;
+      if (state.currentProgress + 1 >= state.maxProgress) return state;
+      return { currentProgress: state.currentProgress + 1 };
+    }),
+  decreaseMax: () =>
+    set((state) => {
+      if (
+        state.maxProgress <= 1 ||
+        state.currentProgress >= state.maxProgress - 1
+      )
+        return state;
+      return { maxProgress: state.maxProgress - 1 };
+    }),
+  increaseMax: () =>
+    set((state) => {
+      if (state.currentProgress >= 99) return state;
+      return { maxProgress: state.maxProgress + 1 };
+    }),
+  setInitialValue: (currentProgress: number, maxProgress: number) =>
+    set({ currentProgress, maxProgress }),
 }));

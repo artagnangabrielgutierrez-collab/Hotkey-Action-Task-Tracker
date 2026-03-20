@@ -16,7 +16,7 @@ import TabBar from "./TabBar";
 import EditHotkey from "./EditHotkey";
 import EditDescription from "./EditDescription";
 import { motion } from "framer-motion";
-
+import { useEffect } from "react";
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 24 },
   animate: { opacity: 1, y: 0 },
@@ -48,6 +48,12 @@ export default function HotKeyActionTracker() {
     setTabNumber([0, 1]);
   }
 
+  useEffect(() => {
+    fetch("https://jsonplaceholder.typicode.com/todos/1")
+      .then((res) => res.json())
+      .then((data) => console.log(data));
+  }, []);
+
   return (
     <section className="min-h-[90vh] pb-6 ">
       {/* Conditional Components */}
@@ -75,7 +81,7 @@ export default function HotKeyActionTracker() {
 
       <TabBar />
       <div
-        className="mx-auto my-auto grid grid-cols-2 grid-rows-3 gap-4 px-4 pt-4 pb-4 h-90 md:min-h-110 md:h-[65vh] lg:h-[65vh] xl:h-[59vh]  xl:max-w-[75%]"
+        className="mx-auto my-auto grid grid-cols-2 grid-rows-3 gap-4 px-4 pt-4 pb-4 h-90 md:min-h-110 md:h-[65vh] lg:h-[65vh] xl:h-[59vh]  xl:max-w-[55%]"
         data-dashboard="Whole Dashboard Compiled"
       >
         <motion.div
@@ -112,8 +118,8 @@ export default function HotKeyActionTracker() {
           <Box3 hotkey={currentDashboardInfo?.hotkey!} />
         </motion.div>
       </div>
-      <div className="col-start-1 col-span-2 row-start-6 row-span-6 px-4 xl:max-w-[75%] mx-auto">
-        <motion.div {...fadeUp(0.4)}>
+      <div className="col-start-1 col-span-2 row-start-6 row-span-6 px-4 xl:max-w-[55%] mx-auto">
+        <motion.div {...fadeUp(0.4)} className="">
           <Box4
             currentDashboardInfo={currentDashboardInfo}
             updateDashboardItem={updateDashboardItem}
@@ -121,7 +127,7 @@ export default function HotKeyActionTracker() {
         </motion.div>
         <motion.div
           {...fadeUp(0.5)}
-          className="col-start-2 row-start-2 row-span-3 md:hidden pt-4"
+          className="col-start-2 row-start-2 row-span-3 md:hidden pt-4 "
         >
           <Box5
             dashboardInfo={dashboardInfo}

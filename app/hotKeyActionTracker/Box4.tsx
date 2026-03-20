@@ -5,6 +5,7 @@ import {
   DashboardInfoType,
   useDashboardInfoType,
   useIsOpen,
+  useProgress,
 } from "@/store/useGlobalStore";
 type updateDashboardItem = useDashboardInfoType["updateDashboardItem"];
 
@@ -55,58 +56,41 @@ type Action =
   | { type: "DECREASE_MAX" }
   | { type: "INCREASE_MAX" };
 
-const reducer = (state: State, action: Action): State => {
-  switch (action.type) {
-    case "DECREASE_CURRENT":
-      if (state.currentProgress <= 0) return state;
-      if (state.currentProgress - 1 >= state.maxProgress) return state;
-      return { ...state, currentProgress: state.currentProgress - 1 };
-    case "INCREASE_CURRENT":
-      if (state.currentProgress >= 99) return state;
-      if (state.currentProgress + 1 >= state.maxProgress) return state;
-      return { ...state, currentProgress: state.currentProgress + 1 };
-    case "DECREASE_MAX":
-      if (
-        state.maxProgress <= 1 ||
-        state.currentProgress >= state.maxProgress - 1
-      )
-        return state;
-      return { ...state, maxProgress: state.maxProgress - 1 };
-    case "INCREASE_MAX":
-      if (state.currentProgress >= 99) return state;
-      return { ...state, maxProgress: state.maxProgress + 1 };
-    default:
-      return state;
-  }
-};
-
 export default function Box4({
   currentDashboardInfo,
   updateDashboardItem,
 }: Box4Props) {
-  const { id, name, currentProgress, maxProgress, description } =
+  const { id, name, description, currentProgress, maxProgress } =
     currentDashboardInfo;
+  const {
+    currentProgress: currentProgressStore,
+    maxProgress: maxProgressStore,
+    increaseCurrent,
+    decreaseCurrent,
+    increaseMax,
+    decreaseMax,
+    setInitialValue,
+  } = useProgress();
 
-  const [state, dispatch] = useReducer(reducer, {
-    currentProgress,
-    maxProgress,
-  });
+  const isMounted = useRef(false);
 
-const isMounted = useRef(false);
+  useEffect(() => {
+    setInitialValue(currentProgress, maxProgress);
+  }, []);
 
-useEffect(() => {
-  if (!isMounted.current) {
-    isMounted.current = true;
-    return;
-  }
-  updateDashboardItem(id, {
-    currentProgress: state.currentProgress,
-    maxProgress: state.maxProgress,
-  });
-}, [state.currentProgress, state.maxProgress]);
+  useEffect(() => {
+    if (!isMounted.current) {
+      isMounted.current = true;
+      return;
+    }
+    updateDashboardItem(id, {
+      currentProgress: currentProgressStore,
+      maxProgress: maxProgressStore,
+    });
+  }, [currentProgressStore, maxProgressStore]);
 
   const progressPercentage = Math.round(
-    (state.currentProgress / state.maxProgress) * 100,
+    (currentProgressStore / maxProgressStore) * 100,
   );
   const isDescriptionEdit = useIsOpen((state) => state.isDescriptionEdit);
   const setIsDescriptionEdit = useIsOpen((state) => state.setIsDescriptionEdit);
@@ -120,7 +104,7 @@ useEffect(() => {
   else motivationalQuote = "Finished!!!";
 
   return (
-    <div className="group bg-[#00040f] border border-[#1d4ed8] rounded-lg text-[#bfdbfe] h-full">
+    <div className="group bg-[#00040f] border border-[#1d4ed8] rounded-lg text-[#bfdbfe] h-full ">
       <div className="bg-[#000d1f] border border-[#3b82f6] rounded-lg w-full h-full flex flex-col group-hover:shadow-[0_4px_12px_2px_rgba(59,130,246,0.3),4px_0_8px_0px_rgba(59,130,246,0.15),-4px_0_8px_0px_rgba(59,130,246,0.15)] transition-shadow duration-300 text-sm p-3">
         <div className="pb-2 flex gap-2 justify-start items-center">
           <span className={`${valueCls} inline`}>{name}</span>
@@ -133,9 +117,9 @@ useEffect(() => {
           <div className="flex flex-row items-center gap-4 justify-start">
             <p className=" w-min  text-center">Current Progress</p>
             <SideArrow
-              value={state.currentProgress}
-              leftArrowClick={() => dispatch({ type: "DECREASE_CURRENT" })}
-              rightArrowClick={() => dispatch({ type: "INCREASE_CURRENT" })}
+              value={currentProgressStore}
+              leftArrowClick={() => decreaseCurrent()}
+              rightArrowClick={() => increaseCurrent()}
             />
             <div
               className="w-full p-1 rounded-sm bg-linear-to-r from-[#1e3a8a]/60 via-[#2563eb] to-[#3b82f6] border
@@ -157,9 +141,9 @@ transition-shadow duration-300"
             </div>
 
             <SideArrow
-              value={state.maxProgress}
-              leftArrowClick={() => dispatch({ type: "DECREASE_MAX" })}
-              rightArrowClick={() => dispatch({ type: "INCREASE_MAX" })}
+              value={maxProgressStore}
+              leftArrowClick={() => decreaseMax()}
+              rightArrowClick={() => increaseMax()}
             />
             <p className=" w-min text-center">Max Progress</p>
           </div>
@@ -168,3 +152,6 @@ transition-shadow duration-300"
     </div>
   );
 }
+
+//Notes Ignore
+//this file current and max doesnt change when box 1 increases i need to move reducer in zustand

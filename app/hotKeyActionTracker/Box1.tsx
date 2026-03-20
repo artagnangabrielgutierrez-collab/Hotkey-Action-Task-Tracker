@@ -4,9 +4,9 @@ import {
   useDashboardInfoType,
   useDashboardInfo,
 } from "@/store/useGlobalStore";
-import { Award,  } from "lucide-react";
+import { Award } from "lucide-react";
 type updateDashboardItem = useDashboardInfoType["updateDashboardItem"];
-
+import { useEffect } from "react";
 interface Box1Props {
   currentDashboardInfo: DashboardInfoType;
   updateDashboardItem: updateDashboardItem;
@@ -26,16 +26,19 @@ export default function Box1({
 
   const dashboardInfo = useDashboardInfo((state) => state.dashboardInfo); //for debugging only
   function handleManualIncrease() {
-    
     updateDashboardItem(id, { currentProgress: currentProgress + 1 });
     if (currentProgress + 1 === maxProgress) {
       updateDashboardItem(id, {
         currentProgress: 0,
         totalCompletion: totalCompletion + 1,
-        completionHistoryDate: [{ time: new Date().toLocaleString() }, ...completionHistoryDate, ]
+        completionHistoryDate: [
+          { time: new Date().toLocaleString() },
+          ...completionHistoryDate,
+        ],
       });
     }
   }
+
 
   return (
     <div
@@ -87,7 +90,6 @@ export default function Box1({
           >
             Increase
           </button>
-
         </div>
       </div>
     </div>
