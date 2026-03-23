@@ -11,6 +11,7 @@ interface Box1Props {
   currentDashboardInfo: DashboardInfoType;
   updateDashboardItem: updateDashboardItem;
 }
+import { useProgress } from "@/store/useGlobalStore";
 
 export default function Box1({
   currentDashboardInfo,
@@ -38,7 +39,6 @@ export default function Box1({
       });
     }
   }
-
 
   return (
     <div
@@ -88,7 +88,7 @@ export default function Box1({
             className="px-2 py-1 text-sm font-semibold text-[#bfdbfe] rounded-lg border border-[#3b82f6] shadow-lg transition-all duration-300 transform bg-linear-to-r from-[#1d4ed8] to-[#3b82f6] hover:from-[#2563eb] hover:to-[#60a5fa] hover:shadow-[#3b82f6]/50 hover:scale-105"
             onClick={handleManualIncrease}
           >
-            Increase
+            Task Complete (+ 1)
           </button>
         </div>
       </div>

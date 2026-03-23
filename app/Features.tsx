@@ -37,7 +37,7 @@ export default function Features() {
         className="text-3xl font-bold text-center text-balance max-w-lg"
       >
         <span className="text-white">Turn scattered tasks into </span>
-        <span className="text-blue-400">clear progress</span>
+        <span className="text-yellow-400">clear progress</span>
       </motion.h2>
 
       <motion.p
@@ -55,9 +55,7 @@ export default function Features() {
             {...fadeUp(0.15 * (i + 1))}
             className="flex flex-col items-center text-center gap-3 rounded-xl border border-white/10 bg-white/5 p-6"
           >
-            <div className="flex items-center justify-center rounded-full bg-blue-500/20 text-blue-400 p-3">
-              {f.icon}
-            </div>
+
             <h3 className="text-white font-semibold text-base">{f.title}</h3>
             <p className="text-white/50 text-sm leading-relaxed">{f.desc}</p>
           </motion.div>

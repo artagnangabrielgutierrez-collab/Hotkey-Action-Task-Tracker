@@ -17,6 +17,7 @@ import EditHotkey from "./EditHotkey";
 import EditDescription from "./EditDescription";
 import { motion } from "framer-motion";
 import { useEffect } from "react";
+import Box6 from "./Box6";
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 24 },
   animate: { opacity: 1, y: 0 },
@@ -48,11 +49,7 @@ export default function HotKeyActionTracker() {
     setTabNumber([0, 1]);
   }
 
-  useEffect(() => {
-    fetch("https://jsonplaceholder.typicode.com/todos/1")
-      .then((res) => res.json())
-      .then((data) => console.log(data));
-  }, []);
+
 
   return (
     <section className="min-h-[90vh] pb-6 ">
@@ -136,6 +133,12 @@ export default function HotKeyActionTracker() {
             setTabNumber={setTabNumber}
             updateDashboardItem={updateDashboardItem}
           />
+        </motion.div>
+        <motion.div
+          {...fadeUp(0.5)}
+          className="col-start-2 row-start-2 row-span-3 pt-4 "
+        >
+          <Box6 />
         </motion.div>
       </div>
     </section>

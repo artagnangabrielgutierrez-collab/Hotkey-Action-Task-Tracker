@@ -152,34 +152,6 @@ interface ProgressStore {
 export const useProgress = create<ProgressStore>((set) => ({
   currentProgress: 0,
   maxProgress: 0,
-  decreaseCurrent: () =>
-    set((state) => {
-      if (state.currentProgress <= 0) {
-        window.alert("Current progress cannot go below 0.");
-        return state;
-      }
-      if (state.currentProgress - 1 >= state.maxProgress) {
-        window.alert(
-          "Current progress cannot reach or exceed the max progress.",
-        );
-        return state;
-      }
-      return { currentProgress: state.currentProgress - 1 };
-    }),
-  increaseCurrent: () =>
-    set((state) => {
-      if (state.currentProgress >= 99) {
-        window.alert("Current progress has reached the limit of 99.");
-        return state;
-      }
-      if (state.currentProgress + 1 >= state.maxProgress) {
-        window.alert(
-          "Current progress cannot reach or exceed the max progress.",
-        );
-        return state;
-      }
-      return { currentProgress: state.currentProgress + 1 };
-    }),
   decreaseMax: () =>
     set((state) => {
       if (state.maxProgress <= 1) {

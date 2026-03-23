@@ -17,11 +17,8 @@ export default function Hero() {
 
         <motion.div
           {...fadeUp(0)}
-          className="relative mb-6 flex items-center gap-1.5 rounded-full border border-blue-500/50 bg-blue-500/10 px-4 py-1.5 text-sm text-blue-400"
+          className="relative mb-6 flex items-center gap-1.5 rounded-full border border-yellow-50-500/50 bg-blue-500/10 px-4 py-1.5 text-sm text-yellow-400"
         >
-          <svg viewBox="0 0 24 24" className="h-4 w-4 fill-current">
-            <path d="M11 21h-1l1-7H7.5c-.58 0-.57-.32-.38-.66.19-.34.05-.08.07-.12C8.48 10.94 10.42 7.54 13 3h1l-1 7h3.5c.49 0 .56.33.47.51l-.07.15C12.96 17.55 11 21 11 21" />
-          </svg>
           Log Your Tasks Completions With Your Keyboard Key
         </motion.div>
 
@@ -34,15 +31,17 @@ export default function Hero() {
 
         <motion.h2
           {...fadeUp(0.2)}
-          className="relative text-lg max-w-[75%] text-center pb-6 text-white/80 leading-relaxed tracking-wide text-pretty"
+          className="relative text-lg max-w-[75%] text-center pb-6 text-yellow-100/60 leading-relaxed tracking-wide text-pretty"
         >
           Use your{" "}
-          <span className="text-blue-400/80 font-semibold">Keyboard keys</span>{" "}
+          <span className="text-yellow-400 font-semibold">
+            Keyboard keys
+          </span>{" "}
           to quickly log{" "}
-          <span className="text-blue-400/80 font-semibold">task</span>{" "}
+          <span className="text-yellow-400/80 font-semibold">task</span>{" "}
           completions and{" "}
-          <span className="text-blue-400/80 font-semibold">track</span> them
-          with the built-in tools.
+          <span className="text-yellow-400 font-semibold">track</span> them with
+          the built-in tools.
         </motion.h2>
 
         <motion.p
@@ -55,7 +54,12 @@ export default function Hero() {
         <motion.div {...fadeUp(0.6)}>
           <Link
             href="./hotKeyActionTracker"
-            className="px-3 mt-4 group relative isolate inline-flex items-center justify-center overflow-hidden text-left font-medium transition duration-300 ease-[cubic-bezier(0.4,0.36,0,1)] before:duration-300 before:ease-[cubic-bezier(0.4,0.36,0,1)] before:transition-opacity rounded-md shadow-[0_1px_theme(colors.white/0.07)_inset,0_1px_3px_theme(colors.gray.900/0.2)] before:pointer-events-none before:absolute before:inset-0 before:-z-10 before:rounded-md before:bg-gradient-to-b before:from-white/20 before:opacity-50 hover:before:opacity-100 after:pointer-events-none after:absolute after:inset-0 after:-z-10 after:rounded-md after:bg-gradient-to-b after:from-white/10 after:from-[46%] after:to-[54%] after:mix-blend-overlay text-sm h-[1.875rem] ring-1 bg-gradient-to-r from-blue-700 to-cyan-700 text-white ring-blue-400"
+            className="px-3 mt-4 group relative isolate inline-flex items-center justify-center overflow-hidden 
+            text-left font-medium transition duration-300 ease-[cubic-bezier(0.4,0.36,0,1)] before:duration-300 
+            before:ease-[cubic-bezier(0.4,0.36,0,1)] before:transition-opacity rounded-md shadow-[0_1px_theme(colors.white/0.07)_inset,0_1px_3px_theme(colors.gray.900/0.2)]
+             before:pointer-events-none before:absolute before:inset-0 before:-z-10 before:rounded-md before:bg-gradient-to-b before:from-white/20 before:opacity-50 hover:before:opacity-100
+              after:pointer-events-none after:absolute after:inset-0 after:-z-10 after:rounded-md after:bg-gradient-to-b after:from-white/10 after:from-[46%] after:to-[54%] 
+              after:mix-blend-overlay text-sm h-[1.875rem] ring-1 bg-gradient-to-r from-blue-700 to-yellow-700 text-white ring-blue-400"
           >
             Start Using Now
           </Link>

@@ -30,7 +30,7 @@ function SideArrow({
 }) {
   return (
     <div
-      className="bg-[#000d1f] border border-[#1d4ed8] rounded-lg text-[#bfdbfe] p-3 flex flex-col text-center hover:shadow-[0_4px_12px_2px_rgba(192,192,192,0.3),4px_0_8px_0px_rgba(192,192,192,0.15),-4px_0_8px_0px_rgba(192,192,192,0.15)]
+      className=" bg-[#000d1f] border border-[#1d4ed8] rounded-lg text-[#bfdbfe] p-3 flex flex-col text-center hover:shadow-[0_4px_12px_2px_rgba(192,192,192,0.3),4px_0_8px_0px_rgba(192,192,192,0.15),-4px_0_8px_0px_rgba(192,192,192,0.15)]
 transition-shadow duration-300"
     >
       <div className="flex flex-row justify-center items-center gap-2 ">
@@ -65,8 +65,6 @@ export default function Box4({
   const {
     currentProgress: currentProgressStore,
     maxProgress: maxProgressStore,
-    increaseCurrent,
-    decreaseCurrent,
     increaseMax,
     decreaseMax,
     setInitialValue,
@@ -103,6 +101,26 @@ export default function Box4({
   else if (progressPercentage <= 99) motivationalQuote = "Almost there!";
   else motivationalQuote = "Finished!!!";
 
+  function decreaseCurrent() {
+    if (currentProgress - 1 < 0) {
+      window.alert("Cant be lower than 0");
+      return;
+    }
+    updateDashboardItem(id, {
+      currentProgress: currentProgress - 1,
+    });
+  }
+
+  function increaseCurrent() {
+    if (currentProgress + 1 >= maxProgress) {
+      window.alert('Max Reached, "Press Task Complete (+ 1)" instead');
+      return;
+    }
+    updateDashboardItem(id, {
+      currentProgress: currentProgress + 1,
+    });
+  }
+
   return (
     <div className="group bg-[#00040f] border border-[#1d4ed8] rounded-lg text-[#bfdbfe] h-full ">
       <div className="bg-[#000d1f] border border-[#3b82f6] rounded-lg w-full h-full flex flex-col group-hover:shadow-[0_4px_12px_2px_rgba(59,130,246,0.3),4px_0_8px_0px_rgba(59,130,246,0.15),-4px_0_8px_0px_rgba(59,130,246,0.15)] transition-shadow duration-300 text-sm p-3">
@@ -117,7 +135,7 @@ export default function Box4({
           <div className="flex flex-row items-center gap-4 justify-start">
             <p className=" w-min  text-center">Current Progress</p>
             <SideArrow
-              value={currentProgressStore}
+              value={currentProgress}
               leftArrowClick={() => decreaseCurrent()}
               rightArrowClick={() => increaseCurrent()}
             />
@@ -133,7 +151,7 @@ export default function Box4({
             <div className="flex flex-row items-center gap-4 justify-start w-full ">
               <div
                 className="bg-[#000d1f] border border-[#1d4ed8] rounded-lg text-[#bfdbfe] p-3 flex flex-col text-center w-full hover:shadow-[0_4px_12px_2px_rgba(192,192,192,0.3),4px_0_8px_0px_rgba(192,192,192,0.15),-4px_0_8px_0px_rgba(192,192,192,0.15)]
-transition-shadow duration-300"
+transition-shadow duration-300 "
                 onClick={() => setIsDescriptionEdit(true)}
               >
                 <p className="text-xs line-clamp-2">{description}</p>
