@@ -11,8 +11,8 @@ export default function CompletionHistory({ currentDashboardInfo }: Box2Props) {
   useEffect(() => {
     const checkIfMobile = () => {
       const w = window.innerWidth;
-      if (w >= 764) setCompletionHistoryCount(2);
-      else setCompletionHistoryCount(4);
+      if (w >= 764) setCompletionHistoryCount(4);
+      else setCompletionHistoryCount(2);
     };
     checkIfMobile();
     window.addEventListener("resize", checkIfMobile);
@@ -28,19 +28,23 @@ export default function CompletionHistory({ currentDashboardInfo }: Box2Props) {
       >
         Completion History
         <hr className="w-[99%] mx-auto border-[#3b82f6] mt-1" />
-        <div className="flex flex-col gap-5 md:flex-row w-full  mb-auto mt-[0.60rem] overflow-auto ">
-          {currentDashboardInfo.completionHistoryDate
-            .slice(0, completionHistoryCount)
-            .map((e, i) => {
-              return (
-                <div
-                  key={i}
-                  className="flex items-center gap-3 p-3 rounded-lg border-l-4 border-y border-r border-cyan-700/50 bg-slate-900/40 w-full"
-                >
-                  {e.time}
-                </div>
-              );
-            })}
+        <div className="flex flex-col gap-5 md:flex-row w-full  mb-auto mt-[0.60rem] overflow-auto text-center">
+          {currentDashboardInfo.completionHistoryDate.length === 0 ? (
+            <p className="mx-auto">You have no recent task completion</p>
+          ) : (
+            currentDashboardInfo.completionHistoryDate
+              .slice(0, completionHistoryCount)
+              .map((e, i) => {
+                return (
+                  <div
+                    key={i}
+                    className="flex items-center gap-3 p-3 rounded-lg border-l-4 border-y border-r border-cyan-700/50 bg-slate-900/40 w-full"
+                  >
+                    {e.time}
+                  </div>
+                );
+              })
+          )}
         </div>
       </div>
     </div>

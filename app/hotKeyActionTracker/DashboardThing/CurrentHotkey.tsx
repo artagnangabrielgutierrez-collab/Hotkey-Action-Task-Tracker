@@ -20,7 +20,7 @@ export default function CurrentHotkey({ hotkey }: Box3Props) {
 transition-shadow duration-300"
           onClick={() => setIsHotkeyEdit(true)}
         >
-          <p className="text-md md:text-[2rem] lg:text-[2.5rem] xl:text-[3rem]  2xl:text-[4rem] tracking-widest">
+          <p className="text-md md:text-[2rem]   tracking-widest">
             {hotkey}
           </p>
         </div>

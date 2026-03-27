@@ -1,4 +1,4 @@
-//@ts-nocheck
+//States and types
 
 import { create } from "zustand";
 
@@ -57,10 +57,11 @@ export type useDashboardInfoType = {
     id: number,
     updates: Partial<DashboardInfoType>,
   ) => void;
+  setNewTab: (newArr: DashboardInfoType[]) => void;
 };
 
 //N: Fix namings of functions
-export const useDashboardInfo = create<useDashboardInfo>()(
+export const useDashboardInfo = create<useDashboardInfoType>()(
   persist(
     (set) => ({
       dashboardInfo: [
@@ -79,11 +80,11 @@ export const useDashboardInfo = create<useDashboardInfo>()(
         {
           uniqueId: crypto.randomUUID(),
           id: 2,
-          name: "2",
-          currentProgress: 1,
-          maxProgress: 3,
+          name: "Sample 2",
+          currentProgress: 0,
+          maxProgress: 10,
           totalCompletion: 0,
-          hotkey: "1Q",
+          hotkey: "1P",
           completionHistoryDate: [{ time: "3/15/2026, 12:51:59 PM" }],
           completionAnimation: false,
           description: "Sample description",
@@ -91,11 +92,11 @@ export const useDashboardInfo = create<useDashboardInfo>()(
         {
           uniqueId: crypto.randomUUID(),
           id: 3,
-          name: "3",
-          currentProgress: 1,
-          maxProgress: 3,
-          totalCompletion: 0,
-          hotkey: "1Q",
+          name: "Sample 3",
+          currentProgress: 6,
+          maxProgress: 7,
+          totalCompletion: 4,
+          hotkey: "1W",
           completionHistoryDate: [{ time: "3/15/2026, 12:51:59 PM" }],
           completionAnimation: false,
           description: "Sample description",

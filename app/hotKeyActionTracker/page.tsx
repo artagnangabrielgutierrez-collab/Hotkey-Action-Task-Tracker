@@ -19,6 +19,7 @@ import { motion } from "framer-motion";
 import { useEffect } from "react";
 import Box6 from "./DashboardThing/Quote";
 import Heatmap from "./DashboardThing/Heatmap";
+import Quote from "./DashboardThing/Quote";
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 24 },
   animate: { opacity: 1, y: 0 },
@@ -48,6 +49,7 @@ export default function HotKeyActionTracker() {
   if (!currentDashboardInfo) {
     setActiveTab(1);
     setTabNumber([0, 1]);
+    return null;
   }
 
   return (
@@ -77,14 +79,15 @@ export default function HotKeyActionTracker() {
 
       <TabBar />
       <div
-        className="mx-auto my-auto grid grid-cols-2  gap-4 px-4 pt-4 pb-4 h-90 md:min-h-110 md:h-[65vh] lg:h-[65vh] xl:h-[59vh]  xl:max-w-[55%]"
-        data-dashboard="Whole Dashboard Compiled"
+        className="mx-auto grid grid-cols-2 grid-rows-3  gap-4 px-4 pt-4 pb-4 max-h-110 md:max-h-auto xl:max-w-[70%] 2xl:max-w-[50%]"
+        data-dashboard=" Dashboard "
       >
         {/*ProgressBar*/}
         <motion.div
           {...fadeUp(0)}
-          className="col-start-1 row-start-1 row-span-3"
+          className="col-start-1 col end-1 col-span-1 row-start-1 row-end-3 row-span-4"
         >
+          {" "}
           <ProgressBar
             currentDashboardInfo={currentDashboardInfo}
             updateDashboardItem={updateDashboardItem}
@@ -95,7 +98,7 @@ export default function HotKeyActionTracker() {
         {/*Box5*/}
         <motion.div
           {...fadeUp(0.1)}
-          className="col-start-2 row-start-1 row-span-4 md:row-span-1"
+          className="col-start-2 col-end-2 row-start-1 row-end-4"
         >
           <OtherTasksList
             dashboardInfo={dashboardInfo}
@@ -107,29 +110,17 @@ export default function HotKeyActionTracker() {
         </motion.div>
         {/*End*/}
 
-        {/*Box5*/}
-        <motion.div
-          {...fadeUp(0.2)}
-          className="col-start-2 row-start-2 row-span-3 hidden md:block"
-        >
-          {/* for md screens and above */}
-          <CurrentConfiguration
-            currentDashboardInfo={currentDashboardInfo}
-            updateDashboardItem={updateDashboardItem}
-          />
-        </motion.div>
-        {/*End*/}
-
         {/*Box3*/}
         <motion.div
           {...fadeUp(0.3)}
-          className="col-start-1 row-start-4 row-span-1 "
+          className="col-start-1 col-end-1 row-start-3 row-end-4"
         >
           <CurrentHotkey hotkey={currentDashboardInfo?.hotkey!} />
         </motion.div>
         {/*End*/}
       </div>
-      <div className="col-start-1 col-span-2 row-start-6 row-span-6 px-4 xl:max-w-[55%] mx-auto">
+
+      <div className="xl:max-w-[70%] 2xl:max-w-[50%] mx-auto px-4">
         {/*Box4*/}
         <motion.div
           {...fadeUp(0.5)}
@@ -146,17 +137,14 @@ export default function HotKeyActionTracker() {
         {/*End*/}
 
         {/*Box2*/}
-        <motion.div {...fadeUp(0.4)} className="pt-4">
+        <motion.div {...fadeUp(0.4)} className="pt-4 ">
           <CompletionHistory currentDashboardInfo={currentDashboardInfo} />
         </motion.div>
         {/*End*/}
 
         {/*Box6*/}
-        <motion.div
-          {...fadeUp(0.5)}
-          className="col-start-2 row-start-2 row-span-3 pt-4 "
-        >
-          <Box6 />
+        <motion.div {...fadeUp(0.5)} className=" pt-4 ">
+          <Quote />
         </motion.div>
         {/*End*/}
       </div>
