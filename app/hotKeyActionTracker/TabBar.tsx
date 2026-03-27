@@ -1,7 +1,7 @@
 //@ts-nocheck
 
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   useDashboardInfo,
   useActiveTab,
@@ -38,14 +38,14 @@ export default function TabBar() {
   }, []);
 
   function viewPrevTabs() {
-    setTabNumber([tabNumber[0] - 1, tabNumber[1] - 1]);
-    if (isMobile) setActiveTab(activeTab - 1);
+    setActiveTab(activeTab - 1);
+    if (isMobile) setTabNumber([tabNumber[0] - 1, tabNumber[1] - 1]);
   }
 
   function viewNextTabs() {
-    setTabNumber([tabNumber[0] + 1, tabNumber[1] + 1]);
+    setActiveTab(activeTab + 1);
     if (isMobile) {
-      setActiveTab(activeTab + 1);
+      setTabNumber([tabNumber[0] + 1, tabNumber[1] + 1]);
     }
   }
 
@@ -64,7 +64,7 @@ export default function TabBar() {
   }
 
   useEffect(() => {
-    localStorage.clear()
+    localStorage.clear();
   }, []);
   return (
     <>
@@ -73,7 +73,6 @@ export default function TabBar() {
           <button
             className=" text-center my-auto "
             onClick={() => viewPrevTabs()}
-            disabled={tabNumber[0] <= 0}
           >
             &lt; {/* < */}
           </button>
@@ -119,7 +118,6 @@ export default function TabBar() {
           <button
             className=" text-center my-auto"
             onClick={() => viewNextTabs()}
-            disabled={tabNumber[1] + maxTabs >= tabName.length}
           >
             &gt; {/* > */}
           </button>

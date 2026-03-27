@@ -1,6 +1,6 @@
 "use client";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useReducer, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   DashboardInfoType,
   useDashboardInfoType,
@@ -69,6 +69,23 @@ export default function CurrentConfiguration({
     decreaseMax,
     setInitialValue,
   } = useProgress();
+  const [quote, setQuote] = useState(undefined);
+
+  async function getApi() {
+    const res = await fetch("/api/TestingApi");
+    const data = await res.json();
+    setQuote(data);
+  }
+
+  useEffect(() => {
+    getApi();
+  }, []);
+
+  useEffect(() => {
+    setInterval(() => {
+      getApi();
+    }, 10000);
+  }, []);
 
   const isMounted = useRef(false);
 
@@ -122,11 +139,12 @@ export default function CurrentConfiguration({
   }
 
   return (
-    <div className="group bg-[#00040f] border border-[#1d4ed8] rounded-lg text-[#bfdbfe] h-full ">
-      <div className="bg-[#000d1f] border border-[#3b82f6] rounded-lg w-full h-full flex flex-col group-hover:shadow-[0_4px_12px_2px_rgba(59,130,246,0.3),4px_0_8px_0px_rgba(59,130,246,0.15),-4px_0_8px_0px_rgba(59,130,246,0.15)] transition-shadow duration-300 text-sm p-3">
+    <div className=" h-0  ">
+      <div className="bg-[#000d1f] border border-[#3b82f6] rounded-lg  flex flex-col group-hover:shadow-[0_4px_12px_2px_rgba(59,130,246,0.3),4px_0_8px_0px_rgba(59,130,246,0.15),-4px_0_8px_0px_rgba(59,130,246,0.15)] transition-shadow duration-300 text-sm p-3">
         <div className="pb-2 flex gap-2 justify-start items-center">
           <span className={`${valueCls} inline`}>{name}</span>
           Current Configuration
+          <span className="ml-auto">{quote}</span>
         </div>
 
         <hr className="w-[99%] mx-auto border-[#3b82f6] mt-1" />

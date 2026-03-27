@@ -7,24 +7,10 @@ import {
   useTabNumber,
 } from "@/store/useGlobalStore";
 import AddNewTab from "./DashboardThing/AddNewTab";
-import ProgressBar from "./DashboardThing/ProgressBar";
-import CompletionHistory from "./DashboardThing/CompletionHistory";
-import CurrentHotkey from "./DashboardThing/CurrentHotkey";
-import CurrentConfiguration from "./DashboardThing/CurrentConfiguration";
-import OtherTasksList from "./DashboardThing/OtherTasksList";
 import TabBar from "./TabBar";
 import EditHotkey from "./DashboardThing/EditHotkey";
 import EditDescription from "./DashboardThing/EditDescription";
-import { motion } from "framer-motion";
-import { useEffect } from "react";
-import Box6 from "./DashboardThing/Quote";
-import Heatmap from "./DashboardThing/Heatmap";
-import Quote from "./DashboardThing/Quote";
-const fadeUp = (delay = 0) => ({
-  initial: { opacity: 0, y: 24 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.5, delay },
-});
+import DashbordCompiled from "./DashboardThing/DashbordCompiled";
 
 export default function HotKeyActionTracker() {
   const dashboardInfo = useDashboardInfo((state) => state.dashboardInfo);
@@ -78,75 +64,16 @@ export default function HotKeyActionTracker() {
       {/* Conditional Components End*/}
 
       <TabBar />
-      <div
-        className="mx-auto grid grid-cols-2 grid-rows-3  gap-4 px-4 pt-4 pb-4 max-h-110 md:max-h-auto xl:max-w-[70%] 2xl:max-w-[50%]"
-        data-dashboard=" Dashboard "
-      >
-        {/*ProgressBar*/}
-        <motion.div
-          {...fadeUp(0)}
-          className="col-start-1 col end-1 col-span-1 row-start-1 row-end-3 row-span-4"
-        >
-          {" "}
-          <ProgressBar
-            currentDashboardInfo={currentDashboardInfo}
-            updateDashboardItem={updateDashboardItem}
-          />
-        </motion.div>
-        {/*End*/}
 
-        {/*Box5*/}
-        <motion.div
-          {...fadeUp(0.1)}
-          className="col-start-2 col-end-2 row-start-1 row-end-4"
-        >
-          <OtherTasksList
-            dashboardInfo={dashboardInfo}
-            activeTab={activeTab}
-            setActiveTab={setActiveTab}
-            setTabNumber={setTabNumber}
-            updateDashboardItem={updateDashboardItem}
-          />
-        </motion.div>
-        {/*End*/}
-
-        {/*Box3*/}
-        <motion.div
-          {...fadeUp(0.3)}
-          className="col-start-1 col-end-1 row-start-3 row-end-4"
-        >
-          <CurrentHotkey hotkey={currentDashboardInfo?.hotkey!} />
-        </motion.div>
-        {/*End*/}
-      </div>
-
-      <div className="xl:max-w-[70%] 2xl:max-w-[50%] mx-auto px-4">
-        {/*Box4*/}
-        <motion.div
-          {...fadeUp(0.5)}
-          className="col-start-2 row-start-2 row-span-3 md:hidden  "
-        >
-          {/* for mobile */}
-          <motion.div {...fadeUp(0.4)} className="pt-">
-            <CurrentConfiguration
-              currentDashboardInfo={currentDashboardInfo}
-              updateDashboardItem={updateDashboardItem}
-            />
-          </motion.div>
-        </motion.div>
-        {/*End*/}
-
-        {/*Box2*/}
-        <motion.div {...fadeUp(0.4)} className="pt-4 ">
-          <CompletionHistory currentDashboardInfo={currentDashboardInfo} />
-        </motion.div>
-        {/*End*/}
-
-        {/*Box6*/}
-        <motion.div {...fadeUp(0.5)} className=" pt-4 ">
-          <Quote />
-        </motion.div>
-        {/*End*/}
+      <div className=" " data-dashboard="whole dashboard">
+        <DashbordCompiled
+          currentDashboardInfo={currentDashboardInfo}
+          updateDashboardItem={updateDashboardItem}
+          dashboardInfo={dashboardInfo}
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          setTabNumber={setTabNumber}
+        />
       </div>
     </section>
   );
