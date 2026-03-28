@@ -58,7 +58,7 @@ export default function DashbordCompiled({
           </svg>
         </button>
 
-        <div className=" grid grid-cols-2 grid-rows-6  gap-4 px-4 pt-4 pb-4 max-h- md:max-h-auto xl:max-w-[100%] 2xl:max-w-[50%] w-full">
+        <div className=" grid grid-cols-2 grid-rows-6  gap-4 px-4 pt-4 pb-4 h-full xl:max-w-[100%] 2xl:max-w-[50%] w-full">
           {/*ProgressBar*/}
           <motion.div
             {...fadeUp(0)}
@@ -101,16 +101,17 @@ export default function DashbordCompiled({
             {...fadeUp(0.5)}
             className="col-start-1 col-span-2 col-end-3 row-start-4   row-end-6     "
           >
-            <CurrentConfiguration
-              currentDashboardInfo={currentDashboardInfo}
-              updateDashboardItem={updateDashboardItem}
-            />
+            <div className=" h-full">
+              <CurrentConfiguration
+                currentDashboardInfo={currentDashboardInfo}
+                updateDashboardItem={updateDashboardItem}
+              />
+            </div>
           </motion.div>
-
           {/*CompletionHistory*/}
           <motion.div
             {...fadeUp(0.5)}
-            className="col-start-1 col-span-2 col-end-3 row-start-6 pt-4   md:row-start-5  row-end-6  md:pt-27   "
+            className="col-start-1 col-span-2 col-end-3 "
           >
             <CompletionHistory currentDashboardInfo={currentDashboardInfo} />
           </motion.div>
