@@ -58,7 +58,7 @@ export default function DashbordCompiled({
           </svg>
         </button>
 
-        <div className=" grid grid-cols-2 grid-rows-6  gap-4 px-4 pt-4 pb-4 h-full xl:max-w-[100%] 2xl:max-w-[50%] w-full">
+        <div className=" grid grid-cols-2 grid-rows-6  gap-4 px-4 pt-4 pb-4 h-[88vh] xl:max-w-[100%] 2xl:max-w-[50%] w-full">
           {/*ProgressBar*/}
           <motion.div
             {...fadeUp(0)}
